@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz de Matemática 9º ano - Prof Valdeck Francisco</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="stage">
+    <header>
+      <div class="brand-group">
+        <div class="logo">Q</div>
+        <div class="title-wrap">
+          <h1>Quiz de Matemática 9º ano</h1>
+          <p>Resolva as questões e teste seus conhecimentos!</p>
+        </div>
+      </div>
+    </header>
+
+    <div id="quiz-box" class="slide-card">
+      <div class="progress">
+        <div class="bar" id="progress-bar"></div>
+      </div>
+      <h2 id="question">Pergunta aqui</h2>
+      <ul id="options" class="bullets"></ul>
+      <button id="next-btn" class="btn">Próxima</button>
+    </div>
+
+    <div id="result-box" class="slide-card hidden">
+      <h2>🎉 Resultado</h2>
+      <p>Você acertou <span id="score"></span> de <span id="total"></span> questões.</p>
+      <button id="restart-btn" class="btn secondary">Jogar Novamente</button>
+    </div>
+
+    <footer>Professor Valdeck Francisco — Material Didático</footer>
+  </div>
+
+  <script>
+    const questions = [
+      // D186-M: Área de Figuras bidimensionais
+      {question:"Um terreno tem formato retangular, medindo 20 m de comprimento e 15 m de largura. Qual a sua área?", options:["150 m²","200 m²","300 m²","3000 m²"], answer:2},
+      {question:"A base de um triângulo mede 12 cm e a altura mede 8 cm. A área é:", options:["48 cm²","60 cm²","72 cm²","96 cm²"], answer:0},
+      {question:"Um quadrado tem lado de 9 m. Qual a área?", options:["27 m²","36 m²","81 m²","90 m²"], answer:2},
+      {question:"Um círculo tem raio de 7 cm. (Use π = 3,14). Qual a área?", options:["49 cm²","154 cm²","200 cm²","314 cm²"], answer:1},
+
+      // D189-M: Volume/capacidade de paralelepípedos
+      {question:"Uma caixa mede 4 m de comprimento, 3 m de largura e 2 m de altura. Qual o volume?", options:["9 m³","12 m³","18 m³","24 m³"], answer:3},
+      {question:"Uma piscina retangular mede 5 m de comprimento, 4 m de largura e 2 m de profundidade. Qual sua capacidade?", options:["20 m³","30 m³","40 m³","50 m³"], answer:2},
+      {question:"Uma caixa d’água em forma de paralelepípedo tem 1,5 m de comprimento, 1 m de largura e 2 m de altura. Qual seu volume?", options:["1,5 m³","2 m³","3 m³","4 m³"], answer:2},
+      {question:"Um aquário tem 60 cm de comprimento, 40 cm de largura e 30 cm de altura. Qual seu volume?", options:["72 000 cm³","60 000 cm³","54 000 cm³","48 000 cm³"], answer:2},
+
+      // D087-M: Sistema de equações polinomiais de 1º grau
+      {question:"João comprou 2 camisetas e 1 calça por R$ 150. Pedro comprou 1 camiseta e 1 calça por R$ 100. Quanto custa cada camiseta?", options:["R$ 25","R$ 50","R$ 75","R$ 100"], answer:1},
+      {question:"Em uma lanchonete, 2 sucos e 1 sanduíche custam R$ 22. Já 1 suco e 1 sanduíche custam R$ 16. Quanto custa o suco?", options:["R$ 3","R$ 4","R$ 6","R$ 8"], answer:2},
+      {question:"O dobro da idade de Ana mais a idade de Beto é 28. A soma das idades é 22. A idade de Ana é:", options:["8","10","12","14"], answer:1},
+      {question:"Em uma loja, 3 lápis e 2 borrachas custam R$ 7. Já 2 lápis e 1 borracha custam R$ 4. Quanto custa o lápis?", options:["R$ 1","R$ 2","R$ 3","R$ 4"], answer:1},
+
+      // D176-M: Localização no plano cartesiano
+      {question:"O ponto (3,2) está localizado em qual quadrante?", options:["1º","2º","3º","4º"], answer:0},
+      {question:"O ponto (-5, 4) pertence ao:", options:["1º quadrante","2º quadrante","3º quadrante","4º quadrante"], answer:1},
+      {question:"O ponto (0, -7) está localizado:", options:["No eixo X","No eixo Y","No 3º quadrante","No 4º quadrante"], answer:1},
+      {question:"O ponto (-2, -3) está localizado no:", options:["1º quadrante","2º quadrante","3º quadrante","4º quadrante"], answer:2},
+
+      // D083-M: Equação do 1º grau
+      {question:"Resolva: 2x + 5 = 15", options:["3","4","5","6"], answer:2},
+      {question:"Resolva: 7x – 9 = 12", options:["1","2","3","4"], answer:3},
+      {question:"Um número somado a 12 resulta em 30. Qual é esse número?", options:["14","15","16","18"], answer:0},
+      {question:"O triplo de um número é igual a 21. Qual é esse número?", options:["5","6","7","8"], answer:2},
+
+      // D168-M: Soma dos ângulos internos de triângulo
+      {question:"Em um triângulo, dois ângulos medem 40° e 80°. O terceiro ângulo mede:", options:["40°","50°","60°","70°"], answer:1},
+      {question:"Em um triângulo, os ângulos medem 30° e 90°. O terceiro ângulo mede:", options:["40°","50°","60°","70°"], answer:2},
+      {question:"Em um triângulo isósceles, dois ângulos medem 65°. O terceiro mede:", options:["40°","45°","50°","55°"], answer:0},
+      {question:"Num triângulo, os ângulos medem x, x e 120°. O valor de x é:", options:["20°","30°","40°","50°"], answer:1},
+
+      // D013-M: Frações e significados
+      {question:"Qual fração representa 3 de 8 pedaços de uma pizza?", options:["1/8","3/8","5/8","8/3"], answer:1},
+      {question:"Em uma sala, 12 dos 30 alunos são meninas. A fração de meninas é:", options:["6/15","2/5","12/30","Todas as anteriores"], answer:3},
+      {question:"Qual fração corresponde a 0,75?", options:["1/2","2/3","3/4","4/5"], answer:2},
+      {question:"Uma barra de chocolate foi dividida em 10 partes iguais. João comeu 4. Qual fração ele comeu?", options:["1/10","2/5","4/10","6/10"], answer:1},
+
+      // D217-M: Listas, tabelas e gráficos
+      {question:"A tabela mostra a quantidade de livros lidos por três alunos: Ana:5, Bruno:7, Carla:3. Qual gráfico melhor representa esses dados?", options:["De setores","De linhas","De barras","Nenhum"], answer:2},
+      {question:"Uma pesquisa em uma escola mostrou: 40 gostam de futebol, 25 de vôlei e 15 de basquete. Quantos alunos responderam?", options:["70","75","80","85"], answer:2},
+      {question:"Em um gráfico de barras, a altura da barra de Maria é 12 e de José é 8. A diferença entre eles é:", options:["2","4","6","8"], answer:2},
+      {question:"Um gráfico de setores mostra que 25% dos alunos preferem matemática. Em uma turma de 40 alunos, quantos preferem matemática?", options:["8","10","12","15"], answer:0}
+    ];
+
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+    const nextBtn = document.getElementById("next-btn");
+    const progressBar = document.getElementById("progress-bar");
+    const quizBox = document.getElementById("quiz-box");
+    const resultBox = document.getElementById("result-box");
+    const scoreEl = document.getElementById("score");
+    const totalEl = document.getElementById("total");
+    const restartBtn = document.getElementById("restart-btn");
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    totalEl.textContent = questions.length;
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      questionEl.textContent = q.question;
+      optionsEl.innerHTML = "";
+      q.options.forEach((opt, i) => {
+        const li = document.createElement("li");
+        li.textContent = opt;
+        li.classList.add("option");
+        li.addEventListener("click", () => selectOption(i));
+        optionsEl.appendChild(li);
+      });
+      nextBtn.style.display = "none";
+      updateProgress();
+    }
+
+    function selectOption(index) {
+      const q = questions[currentQuestion];
+      const allOptions = document.querySelectorAll(".option");
+      allOptions.forEach((opt, i) => {
+        if (i === q.answer) opt.classList.add("correct");
+        if (i === index && i !== q.answer) opt.classList.add("wrong");
+        opt.style.pointerEvents = "none";
+      });
+      if (index === q.answer) score++;
+      nextBtn.style.display = "block";
+    }
+
+    nextBtn.addEventListener("click", () => {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    });
+
+    function updateProgress() {
+      const pct = ((currentQuestion) / questions.length) * 100;
+      progressBar.style.width = pct + "%";
+    }
+
+    function showResult() {
+      quizBox.classList.add("hidden");
+      resultBox.classList.remove("hidden");
+      scoreEl.textContent = score;
+      progressBar.style.width = "100%";
+    }
+
+    restartBtn.addEventListener("click", () => {
+      score = 0;
+      currentQuestion = 0;
+      resultBox.classList.add("hidden");
+      quizBox.classList.remove("hidden");
+      loadQuestion();
+    });
+
+    loadQuestion();
+  </script>
+</body>
+</html>
