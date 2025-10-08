@@ -1,170 +1,270 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz de Matemática 9º ano - Prof Valdeck Francisco</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Resumo de Matemática — 9º Ano (HTML)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
   <div class="stage">
     <header>
       <div class="brand-group">
-        <div class="logo">Q</div>
+        <div class="logo">M</div>
         <div class="title-wrap">
-          <h1>Quiz de Matemática 9º ano</h1>
-          <p>Resolva as questões e teste seus conhecimentos!</p>
+          <h1>Resumo de Matemática — 9º Ano</h1>
+          <p>Turma do Ensino Médio (aulas objetivas)</p>
         </div>
+      </div>
+      
+      <div class="prof-details">
+        <div class="name">Professor Valdeck Francisco</div>
+        <div class="role">Autor e responsável pela aula</div>
       </div>
     </header>
 
-    <div id="quiz-box" class="slide-card">
-      <div class="progress">
-        <div class="bar" id="progress-bar"></div>
+    <div class="inspiration">
+      <div class="quote">“O perfeito equilíbrio só DEUS pode criar!”</div>
+      <div class="author">Professor Valdeck Francisco</div>
+    </div>
+
+
+    <div class="slide-card" role="region" aria-label="Apresentação de matemática">
+      <div class="progress" aria-hidden><div class="bar" id="progressBar"></div></div>
+
+      <div id="slideInner" class="slide-inner">
+        <div class="left">
+          <div class="prof-name">Professor Valdeck Francisco</div>
+          <h2 id="slideTitle">∆ D075-M – Proporcionalidade entre grandezas</h2>
+          
+          <ul id="slideBullets" class="bullets" aria-live="polite">
+            <li>Comparar e relacionar grandezas, como tempo/distância, preço/quantidade, ou litros/reais.</li>
+            <li>Exemplo: Se 3 laranjas custam R$ 6,00, quanto custam 5 laranjas?</li>
+            <li>A solução é montar uma regra de três e resolver.</li>
+          </ul>
+          
+          <div id="slideNote" class="note">Sempre que precisar comparar duas grandezas que variam, use a proporcionalidade.</div>
+        </div>
+
+        <!-- <div class="visual" aria-hidden>
+          <svg id="visualSVG" width="300" height="180" viewBox="0 0 300 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#facc15"/></linearGradient>
+            </defs>
+            <rect x="10" y="20" width="80" height="80" rx="8" fill="url(#g1)" opacity="0.95" />
+            <rect x="110" y="30" width="160" height="50" rx="6" fill="#f3f4f6" />
+            <polygon points="130,120 230,120 180,60" fill="#fde68a"></polygon>
+          </svg>
+        </div> -->
       </div>
-      <h3 id="question-counter"></h3>
-      <h2 id="question">Pergunta aqui</h2>
-      <ul id="options" class="bullets"></ul>
-      <button id="next-btn" class="btn">Próxima</button>
+
+      <div class="controls">
+        <div class="controls-left">
+          <button id="btnPrev" class="btn secondary" aria-label="Anterior">Anterior</button>
+          <button id="btnNext" class="btn secondary" aria-label="Próximo">Próximo</button>
+        </div>
+
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+
     </div>
 
-    <div id="result-box" class="slide-card hidden">
-      <h2>🎉 Resultado</h2>
-      <p>Você acertou <span id="score"></span> de <span id="total"></span> questões.</p>
-      <button id="restart-btn" class="btn secondary">Jogar Novamente</button>
-    </div>
-
-    <footer>Professor Valdeck Francisco — Material Didático</footer>
+    <footer>Resumo: Descritores D075, D181, D016, D144, D015, D121, D157 do 9º Ano.</footer>
   </div>
 
   <script>
-    const questions = [
-    // D186-M: Área de Figuras bidimensionais
-    {question:"Um terreno tem formato retangular, medindo 20 m de comprimento e 15 m de largura. Qual a sua área?", options:["150 m²","200 m²","300 m²","3000 m²"], answer:2}, // C
-    {question:"A base de um triângulo mede 12 cm e a altura mede 8 cm. A área é:", options:["48 cm²","60 cm²","72 cm²","96 cm²"], answer:0}, // A
-    {question:"Um quadrado tem lado de 9 m. Qual a área?", options:["27 m²","36 m²","81 m²","90 m²"], answer:2}, // C
-    {question:"Um círculo tem raio de 7 cm. (Use π = 3,14). Qual a área?", options:["49 cm²","154 cm²","200 cm²","314 cm²"], answer:1}, // B
+    // Slides data (NOVOS DESCRITORES D075, D181, D016, D144, D015, D121, D157)
+    const slides = [
+      {id:'d075', title: "∆ D075-M – Proporcionalidade entre grandezas", bullets:[
+        "Comparar e relacionar grandezas, como tempo/distância, preço/quantidade, ou litros/reais.",
+        "Exemplo: Se 3 laranjas custam R$ 6,00, quanto custam 5 laranjas?",
+        "A solução é montar uma regra de três e resolver."
+      ], note: "Sempre que precisar comparar duas grandezas que variam, use a proporcionalidade."},
+      
+      {id:'d181', title: "📏 D181-M – Conversão entre unidades de medida", bullets:[
+        "Transformar medidas de um tipo para outro, mantendo o mesmo valor.",
+        "1 metro = 100 centímetros",
+        "1 litro = 1.000 mililitros (ml)",
+        "Exemplo: Se uma caixa tem 2.000 ml, ela tem 2 litros."
+      ], note: "Foque em transformar medidas de comprimento, volume ou massa de forma correta."},
+      
+      {id:'d016', title: "🔢 D016-M – Números inteiros na reta numérica", bullets:[
+        "Localizar números inteiros (positivos e negativos) em uma linha.",
+        "O número -3 está à esquerda do zero.",
+        "O número 5 está à direita do zero.",
+        "Quanto mais à direita na reta, maior é o número."
+      ], note: "O zero é o ponto central que separa os números negativos dos positivos."},
+      
+      {id:'d144', title: "⬜ D144-M – Classificar quadriláteros", bullets:[
+        "Identificar e diferenciar figuras de quatro lados (quadriláteros) pelas suas propriedades.",
+        "Quadrado: quatro lados iguais e quatro ângulos retos.",
+        "Retângulo: lados opostos iguais e quatro ângulos retos.",
+        "Losango: quatro lados iguais, mas sem ângulos retos."
+      ], note: "Os quadriláteros são figuras de 4 lados."},
+      
+      {id:'d015', title: "➗ D015-M – Números racionais na reta numérica", bullets:[
+        "Envolve colocar frações e números decimais na reta numérica.",
+        "Exemplo: 0,5 está entre 0 e 1.",
+        "Exemplo: A fração ¾ está mais perto de 1 do que de 0."
+      ], note: "Números racionais são frações (a/b) e seus equivalentes decimais."},
+      
+      {id:'d121', title: "⚙️ D121-M – Sistema de equações do 1º grau", bullets:[
+        "Usar duas equações com duas incógnitas (letras) para resolver problemas.",
+        "Exemplo: Ingresso de adulto custa R$ 10 e de criança R$ 6.",
+        "Exemplo: Se 2 adultos e 3 crianças pagaram R$ 38, quanto custa cada um?",
+        "Resolver o sistema (métodos da substituição ou adição) ajuda a descobrir o valor."
+      ], note: "A chave é montar corretamente as duas equações que representam o problema."},
+      
+      {id:'d157', title: "📐 D157-M – Relações entre ângulos e retas paralelas", bullets:[
+        "Calcular ângulos formados quando uma reta transversal corta duas retas paralelas.",
+        "Ângulos correspondentes (na mesma posição) têm a mesma medida (são iguais).",
+        "Ângulos suplementares somam 180°.",
+        "Exemplo: Se um ângulo mede 120°, o correspondente também mede 120°, e o suplementar mede 60°."
+      ], note: "Com a medida de um ângulo, você descobre a medida de todos os outros 7 ângulos."}
+    ];
 
-    // D189-M: Volume/capacidade de paralelepípedos
-    {question:"Uma caixa mede 4 m de comprimento, 3 m de largura e 2 m de altura. Qual o volume?", options:["9 m³","12 m³","18 m³","24 m³"], answer:3}, // D
-    {question:"Uma piscina retangular mede 5 m de comprimento, 4 m de largura e 2 m de profundidade. Qual sua capacidade?", options:["20 m³","30 m³","40 m³","50 m³"], answer:2}, // C
-    {question:"Uma caixa d’água em forma de paralelepípedo tem 1,5 m de comprimento, 1 m de largura e 2 m de altura. Qual seu volume?", options:["1,5 m³","2 m³","3 m³","4 m³"], answer:2}, // C
-    {question:"Um aquário tem 60 cm de comprimento, 40 cm de largura e 30 cm de altura. Qual seu volume?", options:["72 000 cm³","60 000 cm³","54 000 cm³","48 000 cm³"], answer:0}, // A
+    // DOM refs
+    const slideTitle = document.getElementById('slideTitle');
+    const slideBullets = document.getElementById('slideBullets');
+    const slideNote = document.getElementById('slideNote');
+    const progressBar = document.getElementById('progressBar');
+    const visualSVG = document.getElementById('visualSVG');
+    const thumbs = document.getElementById('thumbs');
 
-    // D087-M: Sistema de equações polinomiais de 1º grau
-    {question:"João comprou 2 camisetas e 1 calça por R$ 150. Pedro comprou 1 camiseta e 1 calça por R$ 100. Quanto custa cada camiseta?", options:["R$ 25","R$ 50","R$ 75","R$ 100"], answer:1}, // B
-    {question:"Em uma lanchonete, 2 sucos e 1 sanduíche custam R$ 22. Já 1 suco e 1 sanduíche custam R$ 16. Quanto custa o suco?", options:["R$ 3","R$ 4","R$ 6","R$ 8"], answer:2}, // C
-    {question:"O dobro da idade de Ana mais a idade de Beto é 28. A soma das idades é 22. A idade de Ana é:", options:["6","10","12","14"], answer:0}, // A
-    {question:"Em uma loja, 3 lápis e 2 borrachas custam R$ 7. Já 2 lápis e 1 borracha custam R$ 4. Quanto custa o lápis?", options:["R$ 1","R$ 2","R$ 3","R$ 4"], answer:0}, // A
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const btnPlay = document.getElementById('btnPlay');
+    const btnExport = document.getElementById('btnExport');
 
-    // D176-M: Localização no plano cartesiano
-    {question:"O ponto (3,2) está localizado em qual quadrante?", options:["1º","2º","3º","4º"], answer:0}, // A
-    {question:"O ponto (-5, 4) pertence ao:", options:["1º quadrante","2º quadrante","3º quadrante","4º quadrante"], answer:1}, // B
-    {question:"O ponto (0, -7) está localizado:", options:["No eixo X","No eixo Y","No 3º quadrante","No 4º quadrante"], answer:1}, // B
-    {question:"O ponto (-2, -3) está localizado no:", options:["1º quadrante","2º quadrante","3º quadrante","4º quadrante"], answer:2}, // C
+    let idx = 0; let playing = false; let autoplayTimer = null; const SLIDE_MS = 7000;
 
-    // D083-M: Equação do 1º grau
-    {question:"Resolva: 2x + 5 = 15", options:["3","4","5","6"], answer:2}, // C
-    {question:"Resolva: 7x – 9 = 12", options:["1","2","3","4"], answer:2}, // C
-    {question:"Um número somado a 12 resulta em 30. Qual é esse número?", options:["15","16","17","18"], answer:3}, // D
-    {question:"O triplo de um número é igual a 21. Qual é esse número?", options:["5","6","7","8"], answer:2}, // C
+    // create thumbs
+    slides.forEach((s,i)=>{
+      const t = document.createElement('button');
+      t.className='thumb'+(i===0?' active':'');
+      t.textContent = i+1;
+      t.addEventListener('click', ()=>{goTo(i);});
+      thumbs.appendChild(t);
+    });
 
-    // D168-M: Soma dos ângulos internos de triângulo
-    {question:"Em um triângulo, dois ângulos medem 40° e 80°. O terceiro ângulo mede:", options:["40°","50°","60°","70°"], answer:2}, // C
-    {question:"Em um triângulo, os ângulos medem 30° e 90°. O terceiro ângulo mede:", options:["40°","50°","60°","70°"], answer:2}, // C
-    {question:"Em um triângulo isósceles, dois ângulos medem 65°. O terceiro mede:", options:["40°","45°","50°","55°"], answer:2}, // C
-    {question:"Num triângulo, os ângulos medem x, x e 120°. O valor de x é:", options:["20°","30°","40°","50°"], answer:1}, // B
-
-    // D013-M: Frações e significados
-    {question:"Qual fração representa 3 de 8 pedaços de uma pizza?", options:["1/8","3/8","5/8","8/3"], answer:1}, // B
-    {question:"Em uma sala, 12 dos 30 alunos são meninas. A fração de meninas é:", options:["6/15","2/5","12/30","Todas as anteriores"], answer:1}, // B
-    {question:"Qual fração corresponde a 0,75?", options:["1/2","2/3","3/4","4/5"], answer:2}, // C
-    {question:"Uma barra de chocolate foi dividida em 10 partes iguais. João comeu 4. Qual fração ele comeu?", options:["1/10","2/5","4/10","6/10"], answer:1}, // B
-
-    // D217-M: Listas, tabelas e gráficos
-    {question:"A tabela mostra a quantidade de livros lidos por três alunos: Ana:5, Bruno:7, Carla:3. Qual gráfico melhor representa esses dados?", options:["De setores","De linhas","De barras","Nenhum"], answer:2}, // C
-    {question:"Uma pesquisa em uma escola mostrou: 40 gostam de futebol, 25 de vôlei e 15 de basquete. Quantos alunos responderam?", options:["70","75","80","85"], answer:2}, // C
-    {question:"Em um gráfico de barras, a altura da barra de Maria é 12 e de José é 8. A diferença entre eles é:", options:["2","4","6","8"], answer:1}, // B  ← CORRIGIDO
-    {question:"Um gráfico de setores mostra que 25% dos alunos preferem matemática. Em uma turma de 40 alunos, quantos preferem matemática?", options:["8","10","12","15"], answer:1} // B  ← CORRIGIDO
-  ];
-
-    const questionEl = document.getElementById("question");
-    const optionsEl = document.getElementById("options");
-    const nextBtn = document.getElementById("next-btn");
-    const progressBar = document.getElementById("progress-bar");
-    const quizBox = document.getElementById("quiz-box");
-    const resultBox = document.getElementById("result-box");
-    const scoreEl = document.getElementById("score");
-    const totalEl = document.getElementById("total");
-    const restartBtn = document.getElementById("restart-btn");
-
-    let currentQuestion = 0;
-    let score = 0;
-
-    totalEl.textContent = questions.length;
-
-    const questionCounterEl = document.getElementById("question-counter");
-
-    function loadQuestion() {
-      const q = questions[currentQuestion];
-      questionEl.textContent = q.question;
-      optionsEl.innerHTML = "";
-      q.options.forEach((opt, i) => {
-        const li = document.createElement("li");
-        li.textContent = opt;
-        li.classList.add("option");
-        li.addEventListener("click", () => selectOption(i));
-        optionsEl.appendChild(li);
+    function updateThumbs(){
+      Array.from(thumbs.children).forEach((el,i)=>{
+        el.classList.toggle('active', i===idx);
       });
-      nextBtn.style.display = "none";
-      updateProgress();
-
-      // Atualiza número da questão
-      questionCounterEl.textContent = `Questão ${currentQuestion + 1} de ${questions.length}`;
     }
 
-    function selectOption(index) {
-      const q = questions[currentQuestion];
-      const allOptions = document.querySelectorAll(".option");
-      allOptions.forEach((opt, i) => {
-        if (i === q.answer) opt.classList.add("correct");
-        if (i === index && i !== q.answer) opt.classList.add("wrong");
-        opt.style.pointerEvents = "none";
+    function render(){
+      const s = slides[idx];
+      slideTitle.textContent = s.title;
+      slideBullets.innerHTML=''; // Limpa o conteúdo hardcoded para a animação
+      s.bullets.forEach((b,i)=>{
+        const li = document.createElement('li');
+        li.textContent = b;
+        li.style.animation = `fadeUp .45s ease forwards ${(i*120)+120}ms`;
+        slideBullets.appendChild(li);
       });
-      if (index === q.answer) score++;
-      nextBtn.style.display = "block";
+      slideNote.textContent = s.note;
+
+      // progress
+      const pct = Math.round(((idx+1)/slides.length)*100);
+      progressBar.style.width = pct + '%';
+
+      // simple visual change (switch shapes per slide)
+      // updateVisual(s.id);
+
+      // animate slide card
+      const slideInner = document.getElementById('slideInner');
+      slideInner.classList.remove('animate-slide');
+      // trigger reflow to restart animation
+      void slideInner.offsetWidth;
+      slideInner.classList.add('animate-slide');
+
+      updateThumbs();
     }
 
-    nextBtn.addEventListener("click", () => {
-      currentQuestion++;
-      if (currentQuestion < questions.length) {
-        loadQuestion();
-      } else {
-        showResult();
+    // updateVisual (MANTIDA)
+    // function updateVisual(id){
+    //   const ns = {
+    //     area:`<rect x="10" y="20" width="80" height="80" rx="8" fill="url(#g1)" opacity="0.95" />
+    //           <rect x="110" y="30" width="160" height="50" rx="6" fill="#f3f4f6" />
+    //           <polygon points="130,120 230,120 180,60" fill="#fde68a"></polygon>`,
+    //     volume:`<rect x="30" y="20" width="180" height="100" rx="10" fill="url(#g1)" opacity="0.9" />`,
+    //     d121:`<circle cx="70" cy="80" r="40" fill="url(#g1)" />
+    //               <rect x="160" y="50" width="110" height="60" rx="8" fill="#eef2ff" />`,
+    //     d016:`<line x1="10" y1="150" x2="290" y2="150" stroke="#9ca3af" stroke-width="1" />
+    //            <line x1="150" y1="10" x2="150" y2="170" stroke="#9ca3af" stroke-width="1" />
+    //            <circle cx="200" cy="90" r="10" fill="url(#g1)" />`,
+    //     d075:`<rect x="20" y="30" width="260" height="100" rx="8" fill="#f3f4f6" />
+    //               <text x="40" y="85" font-size="22" fill="#0f172a">A/B = C/D</text>`,
+    //     d157:`<path d="M40 140 L140 40 L240 140 Z" fill="url(#g1)" />
+    //              <circle cx="90" cy="80" r="6" fill="#fff" />`,
+    //     d015:`<rect x="20" y="40" width="260" height="60" rx="8" fill="#f3f4f6" />
+    //              <text x="120" y="80" font-size="26" fill="#0f172a">3/4</text>`,
+    //     graficos:`<rect x="20" y="60" width="30" height="80" fill="#e5f9f0" />
+    //              <rect x="70" y="40" width="30" height="100" fill="#fde68a" />
+    //              <rect x="120" y="90" width="30" height="50" fill="#e5e7eb" />
+    //              <circle cx="240" cy="70" r="30" fill="#fff7ed" />`,
+    //     d144: `<rect x="10" y="20" width="80" height="80" rx="8" fill="url(#g1)" opacity="0.95" />
+    //            <rect x="110" y="30" width="160" height="50" rx="6" fill="#f3f4f6" />
+    //            <rect x="50" y="100" width="100" height="50" rx="6" fill="#fde68a" />`
+    //   };
+    //   // Usa uma das IDs existentes como fallback se a nova não for mapeada
+    //   visualSVG.innerHTML = `<defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#facc15"/></linearGradient></defs>` + (ns[id]||ns.d075);
+    // }
+
+    // controls
+    btnPrev.addEventListener('click', ()=>{prev();});
+    btnNext.addEventListener('click', ()=>{next();});
+    
+    function next(){ idx = (idx+1) % slides.length; render(); }
+    function prev(){ idx = (idx-1 + slides.length) % slides.length; render(); }
+    function goTo(i){ idx = i; render(); }
+
+    function startAutoplay(){ playing = true; autoTick(); }
+    function stopAutoplay(){ playing = false; if(autoplayTimer) {clearTimeout(autoplayTimer); autoplayTimer=null;} }
+    function togglePlay(){ if(playing) stopAutoplay(); else startAutoplay(); }
+    function autoTick(){ if(!playing) return; autoplayTimer = setTimeout(()=>{ next(); autoTick(); }, SLIDE_MS); }
+
+    // keyboard support
+    document.addEventListener('keydown', (e)=>{
+      if(e.key==='ArrowRight') next();
+      if(e.key==='ArrowLeft') prev();
+      if(e.key===' ') { e.preventDefault(); togglePlay(); }
+    });
+
+    // init
+    render(); 
+    
+    // =========== INÍCIO DO SLIDESHOW DE BACKGROUND ===========
+    document.addEventListener('DOMContentLoaded', function() {
+      const bgImages = [
+        'imagem1.png',  // URL-encoded para espaços e vírgulas
+        'imagem2.jpg',  // Ajuste se necessário
+        'imagem3.png'  // Encoded para caracteres especiais
+      ];
+      let bgIndex = 0;
+
+      // Pré-carrega as imagens antes de aplicar
+      const preloaded = [];
+      bgImages.forEach(src => {
+        const img = new Image();
+        img.src = src;
+        preloaded.push(img);
+      });
+
+      function updateBackground() {
+        // Adiciona uma sobreposição escura para garantir a legibilidade do texto
+        document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${bgImages[bgIndex]}')`;
+        bgIndex = (bgIndex + 1) % bgImages.length;
+        document.body.style.backgroundColor = 'transparent'; // remove o cinza após o carregamento
       }
+      
+      updateBackground(); // Define a imagem inicial assim que a página carrega
+      // setInterval(updateBackground, 10000); // Muda a imagem a cada 10 segundos
     });
+    // =========== FIM DO SLIDESHOW DE BACKGROUND ===========
 
-    function updateProgress() {
-      const pct = ((currentQuestion) / questions.length) * 100;
-      progressBar.style.width = pct + "%";
-    }
-
-    function showResult() {
-      quizBox.classList.add("hidden");
-      resultBox.classList.remove("hidden");
-      scoreEl.textContent = score;
-      progressBar.style.width = "100%";
-    }
-
-    restartBtn.addEventListener("click", () => {
-      score = 0;
-      currentQuestion = 0;
-      resultBox.classList.add("hidden");
-      quizBox.classList.remove("hidden");
-      loadQuestion();
-    });
-
-    loadQuestion();
   </script>
 </body>
 </html>
